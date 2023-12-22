@@ -17,10 +17,10 @@ docker exec -it kafka1 bash
 ```
 
 - **kafka-topics** 명령어를 사용하여 Kafka 토픽을 생성합니다.
-  - **kafka1:19092**는 docker-compose.yml 파일의 **KAFKA_ADVERTISED_LISTENERS**를 참조합니다.
+  - **kafka1:29092**는 docker-compose.yml 파일의 **KAFKA_ADVERTISED_LISTENERS**를 참조합니다.
 
 ```
-kafka-topics --bootstrap-server kafka1:19092 \
+kafka-topics --bootstrap-server kafka1:29092 \
              --create \
              --topic test-topic \
              --replication-factor 1 --partitions 1
@@ -30,7 +30,7 @@ kafka-topics --bootstrap-server kafka1:19092 \
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-console-producer --bootstrap-server kafka1:19092 \
+kafka-console-producer --bootstrap-server kafka1:29092 \
                        --topic test-topic
 ```
 
@@ -38,7 +38,7 @@ kafka-console-producer --bootstrap-server kafka1:19092 \
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-console-consumer --bootstrap-server kafka1:19092 \
+kafka-console-consumer --bootstrap-server kafka1:29092 \
                        --topic test-topic \
                        --from-beginning
 ```
@@ -49,7 +49,7 @@ kafka-console-consumer --bootstrap-server kafka1:19092 \
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-console-producer --bootstrap-server kafka1:19092 \
+kafka-console-producer --bootstrap-server kafka1:29092 \
                        --topic test-topic \
                        --property "key.separator=-" --property "parse.key=true"
 ```
@@ -58,7 +58,7 @@ kafka-console-producer --bootstrap-server kafka1:19092 \
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-console-consumer --bootstrap-server kafka1:19092 \
+kafka-console-consumer --bootstrap-server kafka1:29092 \
                        --topic test-topic \
                        --from-beginning \
                        --property "key.separator= - " --property "print.key=true"
@@ -68,7 +68,7 @@ kafka-console-consumer --bootstrap-server kafka1:19092 \
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-console-consumer --bootstrap-server kafka1:19092 \
+kafka-console-consumer --bootstrap-server kafka1:29092 \
                        --topic test-topic --group console-consumer-41911\
                        --property "key.separator= - " --property "print.key=true"
 ```
@@ -84,7 +84,7 @@ b-bus
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-console-consumer --bootstrap-server kafka1:19092 \
+kafka-console-consumer --bootstrap-server kafka1:29092 \
                        --topic library-events.DLT \
                        --property "print.headers=true" --property "print.timestamp=true" 
 ```
@@ -108,7 +108,7 @@ docker-compose -f docker-compose-multi-broker.yml up
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-topics --bootstrap-server kafka1:19092 \
+kafka-topics --bootstrap-server kafka1:29092 \
              --create \
              --topic test-topic \
              --replication-factor 3 --partitions 3
@@ -171,7 +171,7 @@ kafka-configs  --bootstrap-server localhost:9092 --entity-type topics --entity-n
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-topics --bootstrap-server kafka1:19092 --list
+kafka-topics --bootstrap-server kafka1:29092 --list
 
 ```
 
@@ -181,14 +181,14 @@ kafka-topics --bootstrap-server kafka1:19092 --list
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-topics --bootstrap-server kafka1:19092 --describe
+kafka-topics --bootstrap-server kafka1:29092 --describe
 ```
 
 - 특정 Kafka 토픽을 설명하는 명령어입니다.
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-topics --bootstrap-server kafka1:19092 --describe \
+kafka-topics --bootstrap-server kafka1:29092 --describe \
 --topic test-topic
 ```
 
@@ -196,7 +196,7 @@ kafka-topics --bootstrap-server kafka1:19092 --describe \
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-topics --bootstrap-server kafka1:19092 \
+kafka-topics --bootstrap-server kafka1:29092 \
 --alter --topic test-topic --partitions 40
 ```
 
@@ -204,14 +204,14 @@ kafka-topics --bootstrap-server kafka1:19092 \
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-consumer-groups --bootstrap-server kafka1:19092 --list
+kafka-consumer-groups --bootstrap-server kafka1:29092 --list
 ```
 
 #### 컨슈머 그룹과 그들의 오프셋
 
 ```
 docker exec --interactive --tty kafka1  \
-kafka-consumer-groups --bootstrap-server kafka1:19092 \
+kafka-consumer-groups --bootstrap-server kafka1:29092 \
 --describe --group console-consumer-41911
 ```
 
