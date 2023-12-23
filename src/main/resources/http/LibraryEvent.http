@@ -1,0 +1,5 @@
+###
+POST http://localhost:8080/v1/libraryevent
+Content-Type: application/json
+
+< ../json/library-event-create.json
