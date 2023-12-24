@@ -14,14 +14,14 @@ import java.util.concurrent.TimeoutException;
 @RestController
 @Slf4j
 public class LibraryEventController {
-
+    public static final String BASE_URL = "/v1/libraryevent";
     private final LibraryEventsProducer libraryEventsProducer;
 
     public LibraryEventController(LibraryEventsProducer libraryEventsProducer) {
         this.libraryEventsProducer = libraryEventsProducer;
     }
 
-    @PostMapping("/v1/libraryevent")
+    @PostMapping(BASE_URL)
     public LibraryEvent postLibraryEvent(@RequestBody LibraryEvent libraryEvent) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
         log.info("libraryEvent: {}", libraryEvent);
 //        libraryEventsProducer.sendLibraryEvent(libraryEvent);
