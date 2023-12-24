@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
+
 @RestController
 @Slf4j
 public class LibraryEventController {
@@ -19,9 +22,11 @@ public class LibraryEventController {
     }
 
     @PostMapping("/v1/libraryevent")
-    public LibraryEvent postLibraryEvent(@RequestBody LibraryEvent libraryEvent) throws JsonProcessingException {
+    public LibraryEvent postLibraryEvent(@RequestBody LibraryEvent libraryEvent) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
         log.info("libraryEvent: {}", libraryEvent);
-        libraryEventsProducer.sendLibraryEvent(libraryEvent);
+//        libraryEventsProducer.sendLibraryEvent(libraryEvent);
+        libraryEventsProducer.sendLibraryEvent_block_wait(libraryEvent);
+        log.info("After sendLibraryEvent 호출");
         return libraryEvent;
     }
 }

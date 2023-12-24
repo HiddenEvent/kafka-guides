@@ -10,6 +10,10 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 @Slf4j
 @Component
 public class LibraryEventsProducer {
@@ -36,6 +40,18 @@ public class LibraryEventsProducer {
                         handleSuccess(key, value, sendResult);
                     }
                 });
+    }
+
+    public SendResult<Integer, String> sendLibraryEvent_block_wait(LibraryEvent libraryEvent) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
+        Integer key = libraryEvent.libraryEventId();
+        String value = objectMapper.writeValueAsString(libraryEvent);
+
+        SendResult<Integer, String> sendResult = kafkaTemplate.send(topic, key, value)
+//                .get() // block and wait => 메시지가 카프카 브로커로 전송될 때까지 대기
+                .get(3, TimeUnit.SECONDS) // 3초까지 대기
+                ;
+        handleSuccess(key, value, sendResult);
+        return sendResult;
     }
 
     private void handleSuccess(Integer key, String value, SendResult<Integer, String> sendResult) {
