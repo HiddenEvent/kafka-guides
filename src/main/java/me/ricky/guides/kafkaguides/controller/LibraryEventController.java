@@ -25,8 +25,8 @@ public class LibraryEventController {
     public LibraryEvent postLibraryEvent(@RequestBody LibraryEvent libraryEvent) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
         log.info("libraryEvent: {}", libraryEvent);
 //        libraryEventsProducer.sendLibraryEvent(libraryEvent);
-//        libraryEventsProducer.sendLibraryEvent_block_wait(libraryEvent);
-        libraryEventsProducer.sendLibraryEvent_producer_record(libraryEvent);
+        libraryEventsProducer.sendLibraryEvent_block_wait(libraryEvent);
+//        libraryEventsProducer.sendLibraryEvent_producer_record(libraryEvent);
         log.info("After sendLibraryEvent 호출");
         return libraryEvent;
     }
