@@ -1,6 +1,7 @@
 package me.ricky.guides.kafkaguides.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import me.ricky.guides.kafkaguides.domain.LibraryEvent;
 import me.ricky.guides.kafkaguides.producer.LibraryEventsProducer;
@@ -22,7 +23,9 @@ public class LibraryEventController {
     }
 
     @PostMapping(BASE_URL)
-    public LibraryEvent postLibraryEvent(@RequestBody LibraryEvent libraryEvent) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
+    public LibraryEvent postLibraryEvent(
+            @RequestBody @Valid LibraryEvent libraryEvent
+    ) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException {
         log.info("libraryEvent: {}", libraryEvent);
 //        libraryEventsProducer.sendLibraryEvent(libraryEvent);
 //        libraryEventsProducer.sendLibraryEvent_block_wait(libraryEvent);
