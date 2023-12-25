@@ -4,10 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import me.ricky.guides.kafkaguides.domain.LibraryEvent;
+import me.ricky.guides.kafkaguides.domain.LibraryEventType;
 import me.ricky.guides.kafkaguides.producer.LibraryEventsProducer;
+import org.apache.coyote.BadRequestException;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -33,4 +37,17 @@ public class LibraryEventController {
         log.info("After sendLibraryEvent 호출");
         return libraryEvent;
     }
+    @PutMapping(BASE_URL)
+    public LibraryEvent updateLibraryEvent(
+            @RequestBody @Valid LibraryEvent libraryEvent
+    ) throws JsonProcessingException, ExecutionException, InterruptedException, TimeoutException, BadRequestException {
+        log.info("updateLibraryEvent: {}", libraryEvent);
+        libraryEvent.validate();
+
+        libraryEventsProducer.sendLibraryEvent_producer_record(libraryEvent);
+        log.info("After updateLibraryEvent 완료");
+        return libraryEvent;
+    }
+
+
 }
