@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LibraryEventController.class)
@@ -48,13 +49,16 @@ class LibraryEventControllerTest {
         String eventJson = objectMapper.writeValueAsString(TestUtil.libraryEventRecordWithInvalidBook());
         doNothing().when(libraryEventsProducer).sendLibraryEvent_producer_record(isA(LibraryEvent.class));
 
+        String errorMessage = "book.bookId: must not be null, book.bookName: must not be blank";
+
         //when
         ResultActions perform = mockMvc.perform(post("/v1/libraryevent")
                 .content(eventJson)
                 .contentType(MediaType.APPLICATION_JSON));
 
         //then
-        perform.andExpect(status().is4xxClientError());
+        perform.andExpect(status().is4xxClientError())
+                .andExpect(content().string(errorMessage));
     }
 
 }
