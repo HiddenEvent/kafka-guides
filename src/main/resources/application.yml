@@ -16,7 +16,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
-        retry-backoff-ms: 1000 # 1초 간격
+        retry.backoff.ms: 1000 # 1초 간격
         retries: 10 # 10 번 재시도
 
 ---
